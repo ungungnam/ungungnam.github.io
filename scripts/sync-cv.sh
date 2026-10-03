@@ -21,9 +21,10 @@ if ! git remote get-url "$REMOTE" >/dev/null 2>&1; then
   exit 1
 fi
 
-if [ -n "$(git status --porcelain)" ]; then
-  echo "error: working tree is dirty; commit or stash first." >&2
-  git status --short >&2
+# Untracked files are fine; git subtree only objects to tracked modifications.
+if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+  echo "error: you have uncommitted changes; commit or stash them first." >&2
+  git status --short --untracked-files=no >&2
   exit 1
 fi
 
