@@ -4,328 +4,542 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Unghui Nam</title>
-  <meta name="description" content="Personal homepage of Your Name." />
+  <meta name="description" content="Personal homepage of Unghui Nam, a graduate student at Seoul National University working on robot learning and manipulation data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --text:#111;
-      --muted:#555;
-      --link:#1772d0;
-      --bg:#fff;
-      --rule:#e6e6e6;
+      --bg:        #fcfbff;
+      --surface:   #ffffff;
+      --text:      #13151e;
+      --muted:     #576070;
+      --faint:     #8b91a3;
+      --rule:      #e9e8f7;
+
+      --indigo:    #5b4bf5;
+      --violet:    #a855f7;
+      --pink:      #ec4899;
+      --cyan:      #06b6d4;
+      --amber:     #f59e0b;
+
+      --accent:    var(--indigo);
+      --accent-soft:#eceafe;
+
+      --spring:    cubic-bezier(.34,1.56,.64,1);
+      --shadow-sm: 0 1px 2px rgba(42,33,120,.05), 0 3px 10px rgba(42,33,120,.05);
+      --shadow-lg: 0 14px 30px rgba(68,51,196,.16), 0 4px 10px rgba(68,51,196,.08);
     }
-    html,body{background:var(--bg); color:var(--text); margin:0; padding:0;}
+
+    *,*::before,*::after{box-sizing:border-box;}
+    html{-webkit-text-size-adjust:100%;}
+    html{background:var(--bg);}
+    html,body{margin:0; padding:0; color:var(--text);}
+    body{background:transparent;}  /* keeps body::before (z-index:-1) visible */
     body{
-      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
-      line-height: 1.45;
-      font-size: 16px;
+      font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+                  "Apple SD Gothic Neo","Noto Sans KR",Helvetica,Arial,sans-serif;
+      font-size:16px;
+      line-height:1.62;
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
     }
-    a{color:var(--link); text-decoration:none;}
-    a:hover{text-decoration:underline;}
-    .wrap{max-width: 980px; margin: 0 auto; padding: 42px 22px 60px;}
-    .top{
+
+    /* bright colour wash behind the page */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-24vh 0 auto 0;
+      height:86vh;
+      background:
+        radial-gradient(52% 50% at 10% 30%, rgba(91,75,245,.42), transparent 66%),
+        radial-gradient(46% 46% at 48% 4%,  rgba(168,85,247,.36), transparent 68%),
+        radial-gradient(46% 48% at 92% 22%, rgba(236,72,153,.32), transparent 68%),
+        radial-gradient(44% 46% at 70% 58%, rgba(6,182,212,.26), transparent 70%);
+      filter:blur(10px);
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    a{color:var(--accent); text-decoration:none;}
+    a:hover{text-decoration:underline; text-underline-offset:3px;}
+
+    .wrap{max-width:900px; margin:0 auto; padding:58px 22px 48px;}
+
+    /* ---------- hero ---------- */
+    .hero{
       display:grid;
-      grid-template-columns: 220px 1fr;
-      gap: 26px;
+      grid-template-columns:200px 1fr;
+      gap:34px;
       align-items:start;
     }
-    @media (max-width: 760px){
-      .top{grid-template-columns: 1fr; }
-      .photo{max-width: 220px;}
-    }
+    .photo{position:relative; z-index:0;}
     .photo img{
-      width: 100%;
-      height: auto;
-      border-radius: 4px;
+      width:100%;
+      height:auto;
       display:block;
+      border-radius:18px;
+      box-shadow:var(--shadow-lg);
+      transition:transform .45s var(--spring);
     }
+    .photo::after{
+      content:"";
+      position:absolute;
+      inset:-7px;
+      border-radius:25px;
+      background:linear-gradient(135deg, var(--indigo), var(--violet), var(--pink));
+      opacity:0;
+      transform:scale(.94);
+      transition:opacity .4s ease, transform .45s var(--spring);
+      z-index:-1;
+    }
+    .photo:hover img{transform:translateY(-7px) rotate(-1.2deg);}
+    .photo:hover::after{opacity:.85; transform:scale(1);}
+
     h1{
-      font-size: 30px;
-      margin: 0 0 10px;
-      font-weight: 700;
+      font-size:clamp(32px,5.2vw,44px);
+      line-height:1.1;
+      letter-spacing:-.03em;
+      font-weight:800;
+      margin:0 0 6px;
+      color:var(--indigo);
+      background:linear-gradient(100deg, var(--indigo) 8%, var(--violet) 52%, var(--pink) 94%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
     }
-    .subtitle{
-      margin: 0 0 14px;
-      color: var(--muted);
+    .role{margin:0 0 14px; color:var(--muted); font-size:16px;}
+
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 17px; padding:0; list-style:none;}
+    .chip{
+      font-size:12.5px;
+      font-weight:700;
+      letter-spacing:.01em;
+      padding:5px 13px;
+      border-radius:999px;
+      color:#fff;
+      box-shadow:0 3px 10px rgba(68,51,196,.22);
+      transition:transform .3s var(--spring);
     }
-    .links{
-      margin: 10px 0 0;
-      color: var(--muted);
+    .chip:nth-child(1){background:linear-gradient(120deg, var(--indigo), var(--violet));}
+    .chip:nth-child(2){background:linear-gradient(120deg, var(--violet), var(--pink));}
+    .chip:hover{transform:translateY(-3px) scale(1.05);}
+
+    .bio{margin:0 0 20px; color:var(--text);}
+    .bio strong{font-weight:700;}
+
+    .links{display:flex; flex-wrap:wrap; gap:9px;}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:8px 16px;
+      font-size:14.5px;
+      font-weight:600;
+      color:var(--muted);
+      background:var(--surface);
+      border:1.5px solid var(--rule);
+      border-radius:999px;
+      box-shadow:var(--shadow-sm);
+      transition:transform .32s var(--spring), color .22s ease,
+                 border-color .22s ease, box-shadow .28s ease;
     }
-    .links a{white-space:nowrap;}
-    .links span{
-      margin: 0 6px;
+    .pill svg{width:15px; height:15px; flex:none;}
+    .pill:hover{
+      transform:translateY(-5px) scale(1.04);
+      color:var(--accent);
+      border-color:var(--accent);
+      box-shadow:var(--shadow-lg);
+      text-decoration:none;
     }
-    .section{
-      margin-top: 28px;
-      padding-top: 18px;
-      border-top: 1px solid var(--rule);
-    }
+    .pill:nth-child(2):hover{--accent:var(--violet);}
+    .pill:nth-child(3):hover{--accent:var(--cyan);}
+    .pill:nth-child(4):hover{--accent:var(--pink);}
+    .pill:nth-child(5):hover{--accent:var(--indigo);}
+
+    /* ---------- sections ---------- */
+    .section{margin-top:54px;}
     .section h2{
-      margin: 0 0 10px;
-      font-size: 18px;
-      font-weight: 700;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      margin:0 0 20px;
+      font-size:22px;
+      font-weight:800;
+      letter-spacing:-.02em;
     }
-    ul{margin: 8px 0 0; padding-left: 18px;}
-    li{margin: 6px 0;}
-    .pub{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+    .section h2::before{
+      content:"";
+      width:5px;
+      height:23px;
+      border-radius:999px;
+      background:linear-gradient(var(--indigo), var(--pink));
+      flex:none;
     }
 
-    .pub-item{
+    /* ---------- news ---------- */
+    .news{list-style:none; margin:0; padding:0; display:grid; gap:12px;}
+    .news li{
       display:grid;
-      grid-template-columns: 140px 1fr;
-      gap:16px;
+      grid-template-columns:auto 1fr;
+      gap:13px;
+      align-items:baseline;
+      color:var(--muted);
+    }
+    .year{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.05em;
+      color:#fff;
+      background:linear-gradient(120deg, var(--indigo), var(--violet));
+      padding:3px 10px;
+      border-radius:8px;
+      white-space:nowrap;
+      box-shadow:0 3px 9px rgba(68,51,196,.2);
+    }
+    .news em{color:var(--text); font-style:italic; font-weight:500;}
+
+    /* ---------- cards ---------- */
+    .cards{display:grid; gap:15px;}
+    .card{
+      position:relative;
+      display:grid;
+      grid-template-columns:168px 1fr;
+      gap:20px;
       align-items:start;
-      padding: 8px 0;
+      padding:17px;
+      background:var(--surface);
+      border:1.5px solid var(--rule);
+      border-radius:17px;
+      box-shadow:var(--shadow-sm);
+      overflow:hidden;
+      transition:transform .34s var(--spring), box-shadow .3s ease, border-color .3s ease;
+    }
+    /* colour bar that slides in on hover */
+    .card::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:4px;
+      background:linear-gradient(var(--indigo), var(--violet), var(--pink));
+      transform:scaleY(0);
+      transform-origin:top;
+      transition:transform .36s var(--spring);
+    }
+    .card:hover{
+      transform:translateY(-7px);
+      box-shadow:var(--shadow-lg);
+      border-color:#cfc9fb;
+    }
+    .card:hover::before{transform:scaleY(1);}
+
+    .thumb{
+      overflow:hidden;
+      border-radius:11px;
+      border:1px solid var(--rule);
+      background:#fff;
+      line-height:0;
+    }
+    .thumb img{
+      width:100%;
+      height:auto;
+      display:block;
+      transition:transform .5s var(--spring);
+    }
+    .card:hover .thumb img{transform:scale(1.07);}
+
+    .card-title{
+      font-size:16.5px;
+      font-weight:700;
+      letter-spacing:-.012em;
+      line-height:1.36;
+      margin-bottom:5px;
+      transition:color .25s ease;
+    }
+    .card:hover .card-title{color:var(--indigo);}
+
+    .authors{color:var(--muted); font-size:15px; margin-bottom:10px;}
+    .authors a{color:var(--muted); text-decoration:none; border-bottom:1.5px solid transparent;}
+    .authors a:hover{color:var(--violet); border-bottom-color:currentColor; text-decoration:none;}
+    .me{
+      font-weight:800;
+      background:linear-gradient(100deg, var(--indigo), var(--pink));
+      -webkit-background-clip:text;
+      background-clip:text;
+      -webkit-text-fill-color:transparent;
+      color:var(--indigo);
     }
 
-    .pub-thumb img{
-      width:140px;
-      border-radius:4px;
-      border:1px solid #eee;
+    .badge{
+      display:inline-block;
+      font-size:12.5px;
+      font-weight:700;
+      padding:4px 12px;
+      border-radius:999px;
+      color:#fff;
+      background:linear-gradient(120deg, var(--indigo), var(--violet));
+      box-shadow:0 3px 10px rgba(68,51,196,.2);
+    }
+    .badge--review{
+      background:linear-gradient(120deg, #fbbf24, var(--amber));
+      box-shadow:0 3px 10px rgba(245,158,11,.26);
+    }
+    .desc{color:var(--muted); font-size:15px; margin-top:10px;}
+
+    .card-links{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+    .card-links a{
+      font-size:13.5px;
+      font-weight:600;
+      color:var(--muted);
+      padding:4px 13px;
+      border:1.5px solid var(--rule);
+      border-radius:999px;
+      transition:color .2s ease, border-color .2s ease, transform .3s var(--spring);
+    }
+    .card-links a:hover{
+      color:var(--violet);
+      border-color:var(--violet);
+      transform:translateY(-3px) scale(1.05);
+      text-decoration:none;
     }
 
-    .pub-title{font-weight:600;}
-    .pub-authors{color: var(--muted);}
-    .pub-venue{color: var(--muted);}
-    .note{color: var(--muted); font-size: 14px;}
+    .note{color:var(--faint); font-size:13.5px; margin:16px 0 0;}
+
     .footer{
-      margin-top: 28px;
-      padding-top: 14px;
-      border-top: 1px solid var(--rule);
-      color: var(--muted);
-      font-size: 13px;
+      margin-top:60px;
+      padding-top:20px;
+      border-top:1.5px solid var(--rule);
+      color:var(--faint);
+      font-size:13px;
     }
-    /* Optional: nicer smallcaps-ish label */
-    .tag{
-      font-size: 12px;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: var(--muted);
+
+    /* ---------- entrance animation ---------- */
+    .reveal{opacity:0; transform:translateY(24px) scale(.985);}
+    .reveal.is-visible{
+      opacity:1;
+      transform:none;
+      transition:opacity .5s ease, transform .7s var(--spring);
+      transition-delay:var(--d,0ms);
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important;}
+      .reveal{opacity:1; transform:none;}
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width:760px){
+      .wrap{padding:38px 16px 40px;}
+      .hero{grid-template-columns:1fr; gap:22px;}
+      .photo{max-width:170px;}
+      .card{grid-template-columns:1fr; gap:14px; padding:15px;}
+      .thumb{max-width:320px;}
+      .section{margin-top:42px;}
     }
   </style>
 </head>
 
 <body>
   <main class="wrap">
-    <!-- TOP -->
-    <div class="top">
+
+    <!-- ===== HERO ===== -->
+    <header class="hero reveal">
       <div class="photo">
-        <!-- 1) 여기 사진 파일을 repo에 올리고 파일명만 맞추면 됩니다. -->
-        <img src="images/profile_photo.jpg" alt="Your Name photo">
+        <img src="images/profile_photo.jpg" alt="Unghui Nam">
       </div>
 
       <div>
-        <!-- NAME -->
         <h1>Unghui Nam</h1>
-        
-        <!-- OVERVIEW -->
-        <p class="subtitle">
-          Graduate Student at <a href="https://isl.snu.ac.kr/" target="_blank" rel="noreferrer">Seoul National University</a><br>
-          Interests: Robot Learning, Manipulation Data
+
+        <p class="role">
+          Graduate Student at
+          <a href="https://isl.snu.ac.kr/" target="_blank" rel="noreferrer">Seoul National University</a>
         </p>
 
-        <!-- DESCRIPTION -->
-        <p>
+        <ul class="chips">
+          <li class="chip">Robot Learning</li>
+          <li class="chip">Manipulation Data</li>
+        </ul>
+
+        <p class="bio">
           I am a <strong>graduate student</strong> working on
-          <em>robot learning</em> and
-          <em>manipulation data</em>.
-          I am currently advised by <a href="https://ece.snu.ac.kr/en/research-faculty/faculty/fulltime?md=view&profid=p078">Byonghyo Shim</a>.
+          <em>robot learning</em> and <em>manipulation data</em>.
+          I am currently advised by
+          <a href="https://ece.snu.ac.kr/en/research-faculty/faculty/fulltime?md=view&amp;profid=p078" target="_blank" rel="noreferrer">Byonghyo Shim</a>.
           I am interested in building reliable and efficient learning systems for robots.
         </p>
 
-        <!-- CONTACT -->
-        <div class="links">
-          <a href="mailto:uhnam@islab.snu.ac.kr">Email</a>
-          &nbsp;/&nbsp;
-          <a href="https://github.com/ungungnam" target="_blank" rel="noreferrer">GitHub</a>
-          &nbsp;/&nbsp;
-          <a href="https://scholar.google.com/citations?user=5jDNGb8AAAAJ" target="_blank" rel="noreferrer">Google Scholar</a>
-          &nbsp;/&nbsp;
-          <a href="cv.pdf" target="_blank" rel="noreferrer">CV</a>
-          &nbsp;/&nbsp;
-          <a href="https://www.linkedin.com/in/unghui-nam-snu-ai-robot/" target="_blank" rel="noreferrer">LinkedIn</a>
-        </div>
-
-        <!-- <p class="note" style="margin-top:10px;">
-          (Replace the text with your real bio. This layout is intentionally minimal.)
-        </p> -->
+        <nav class="links">
+          <a class="pill" href="mailto:uhnam@islab.snu.ac.kr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+            Email
+          </a>
+          <a class="pill" href="https://github.com/ungungnam" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12.5C24 5.87 18.63.5 12 .5Z"/></svg>
+            GitHub
+          </a>
+          <a class="pill" href="https://scholar.google.com/citations?user=5jDNGb8AAAAJ" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 1 8.5l11 6.5 9-5.32V17h2V8.5L12 2Z"/><path d="M5 12.6v3.9c0 2.2 3.13 4 7 4s7-1.8 7-4v-3.9l-7 4.14-7-4.14Z"/></svg>
+            Google Scholar
+          </a>
+          <a class="pill" href="cv.pdf" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+            CV
+          </a>
+          <a class="pill" href="https://www.linkedin.com/in/unghui-nam-snu-ai-robot/" target="_blank" rel="noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05a3.74 3.74 0 0 1 3.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/></svg>
+            LinkedIn
+          </a>
+        </nav>
       </div>
-    </div>
+    </header>
 
-    <!-- NEWS / UPDATES -->
-    <section class="section">
+    <!-- ===== NEWS ===== -->
+    <section class="section reveal">
       <h2>News</h2>
-      <ul>
-        <li><span class="tag">2026</span> &nbsp; Our paper, <em>Learning Decomposed Visibility for Efficient Active Exploration of Cluttered Scenes</em>, is accepted to the Conference on Robot Learning (CoRL) 2026!</li>
-        <li><span class="tag">2026</span> &nbsp; Our paper, <em>Adaptive Capacity Allocation for Vision Language Action Fine-tuning</em>, is accepted to the IEEE International Conference on Robotics and Automation (ICRA) 2026!</li>
+      <ul class="news">
+        <li>
+          <span class="year">2026</span>
+          <span>Our paper, <em>Learning Decomposed Visibility for Efficient Active Exploration of Cluttered Scenes</em>, is accepted to the Conference on Robot Learning (CoRL) 2026!</span>
+        </li>
+        <li>
+          <span class="year">2026</span>
+          <span>Our paper, <em>Adaptive Capacity Allocation for Vision Language Action Fine-tuning</em>, is accepted to the IEEE International Conference on Robotics and Automation (ICRA) 2026!</span>
+        </li>
       </ul>
     </section>
 
-    <!-- RESEARCH -->
-    <!-- <section class="section">
-      <h2>Research</h2>
-      <p>
-        My research focuses on making large models easier to adapt and evaluate.
-        I care about <strong>efficiency</strong>, <strong>reproducibility</strong>, and <strong>clean abstractions</strong>.
-      </p>
-      <ul>
-        <li><strong>PEFT & rank scheduling</strong> (e.g., AdaLoRA-style approaches)</li>
-        <li><strong>Evaluation harnesses</strong> and task registries</li>
-        <li><strong>Systems for experiments</strong> (data indexing, caching, templates)</li>
-      </ul>
-    </section> -->
-
-    <!-- PUBLICATIONS -->
-    <section class="section">
+    <!-- ===== PUBLICATIONS ===== -->
+    <section class="section reveal">
       <h2>Publications</h2>
-      <div class="pub">
-        <div class="pub-item">
-          <div class="pub-thumb">
+
+      <div class="cards">
+
+        <article class="card">
+          <div class="thumb">
             <img src="images/DiVE_thumbnail.png" alt="DiVE project">
           </div>
-
-          <div class="pub-content">
-            <div class="pub-title">
+          <div>
+            <div class="card-title">
               Learning Decomposed Visibility for Efficient Active Exploration of Cluttered Scenes
             </div>
-
-            <div class="pub-authors">
-              S.Y. Lee*, M.S. Choi*, J.H. Gong, <strong>U. Nam</strong>, M.J. Bae, B. Shim&dagger;
+            <div class="authors">
+              S.Y. Lee*, M.S. Choi*, J.H. Gong, <strong class="me">U. Nam</strong>, M.J. Bae, B. Shim&dagger;
             </div>
-
-            <div class="pub-venue">Conference on Robot Learning (CoRL), 2026</div>
+            <span class="badge">Conference on Robot Learning (CoRL), 2026</span>
           </div>
-        </div>
+        </article>
 
-        <div class="pub-item">
-          <div class="pub-thumb">
+        <article class="card">
+          <div class="thumb">
             <img src="images/LoRA-SP_thumbnail.png" alt="LoRA-SP project">
           </div>
-
-          <div class="pub-content">
-            <div class="pub-title">
+          <div>
+            <div class="card-title">
               Adaptive Capacity Allocation for Vision Language Action Fine-tuning
             </div>
-
-            <div class="pub-authors">
-              D.H. Kim, M.J. Bae*, <strong>U. Nam*</strong>, G.H. Kim*, S.Y. Lee*, K.H. Shim&dagger;, B. Shim&dagger;
+            <div class="authors">
+              D.H. Kim, M.J. Bae*, <strong class="me">U. Nam*</strong>,
+              <a href="https://kimspacehuni.github.io/" target="_blank" rel="noreferrer">G.H. Kim*</a>,
+              S.Y. Lee*, K.H. Shim&dagger;, B. Shim&dagger;
             </div>
-
-            <div class="pub-venue">IEEE International Conference on Robotics and Automation (ICRA), 2026</div>
-
-            <div class="links" style="margin-top:4px;">
-              <a href="https://arxiv.org/abs/2603.07404" target="_blank">paper</a>
-              &nbsp;/&nbsp;
-              <a href="https://github.com/dhkim-furiosa/LoRA-SP" target="_blank">code</a>
-              &nbsp;/&nbsp;
-              <a href="https://dhkim-furiosa.github.io/LoRA-SP/" target="_blank">project</a>
+            <span class="badge">IEEE International Conference on Robotics and Automation (ICRA), 2026</span>
+            <div class="card-links">
+              <a href="https://arxiv.org/abs/2603.07404" target="_blank" rel="noreferrer">paper</a>
+              <a href="https://github.com/dhkim-furiosa/LoRA-SP" target="_blank" rel="noreferrer">code</a>
+              <a href="https://dhkim-furiosa.github.io/LoRA-SP/" target="_blank" rel="noreferrer">project</a>
             </div>
           </div>
-        </div>
+        </article>
 
-        <div class="pub-item">
-          <div class="pub-thumb">
+        <article class="card">
+          <div class="thumb">
             <img src="images/BEDA_thumbnail.png" alt="BEDA project">
           </div>
-
-          <div class="pub-content">
-            <div class="pub-title">
+          <div>
+            <div class="card-title">
               Scalable Autonomous Robotic Data Collection via Data Affordance-Guided Intervention
             </div>
-
-            <div class="pub-authors">
-              <strong>U. Nam</strong>, M.J. Bae, S. Kim, J.A. Kim, S.Y. Lee, M.S. Choi, B. Shim&dagger;
+            <div class="authors">
+              <strong class="me">U. Nam</strong>, M.J. Bae, S. Kim, J.A. Kim, S.Y. Lee, M.S. Choi, B. Shim&dagger;
             </div>
-
-            <div class="pub-venue">Under Review</div>
-
-            <div class="links" style="margin-top:4px;">
-              <a href="beda/">project page</a>
-            </div>
+            <span class="badge badge--review">Under Review</span>
           </div>
-        </div>
+        </article>
 
-        <div class="pub-item">
-          <div class="pub-thumb">
+        <article class="card">
+          <div class="thumb">
             <img src="images/DexStitch_thumbnail.png" alt="DexStitch project">
           </div>
-
-          <div class="pub-content">
-            <div class="pub-title">
+          <div>
+            <div class="card-title">
               DexStitch: Learning and Composing Dexterous Skills from Human Videos via Contact-Aware Robotic Inpainting
             </div>
-
-            <div class="pub-authors">
-              B. Choi*, S. Jung*, <strong>U. Nam*</strong>, Y. Song*, S. Min, M. Lee, B. Shim, Y. Lee&dagger;
+            <div class="authors">
+              B. Choi*, S. Jung*, <strong class="me">U. Nam*</strong>, Y. Song*, S. Min, M. Lee, B. Shim, Y. Lee&dagger;
             </div>
-
-            <div class="pub-venue">Under Review</div>
+            <span class="badge badge--review">Under Review</span>
           </div>
-        </div>
+        </article>
+
       </div>
 
       <p class="note">* Equal contribution. &dagger; Corresponding author.</p>
-
-        <!-- <div class="pub-item">
-          <div class="pub-title">Paper Title Two</div>
-          <div class="pub-authors">Your Name, Coauthor C</div>
-          <div class="pub-venue">Workshop, 2025</div>
-          <div class="links" style="margin-top:4px;">
-            <a href="#" target="_blank" rel="noreferrer">paper</a> /
-            <a href="#" target="_blank" rel="noreferrer">code</a>
-          </div>
-        </div>
-      </div>
-      <p class="note">Tip: If you don’t have publications yet, rename this section to “Projects”.</p> -->
     </section>
 
-    <!-- PROJECTS -->
-    <section class="section">
+    <!-- ===== PROJECTS ===== -->
+    <section class="section reveal">
       <h2>Projects</h2>
-      <div class="pub">
-        <div class="pub-item">
-          <div class="pub-thumb">
+
+      <div class="cards">
+        <article class="card">
+          <div class="thumb">
             <img src="images/PaPA_thumbnail.png" alt="PaPA project">
           </div>
-
-          <div class="pub-content">
-            <div class="pub-title">
-              PaPA: Pick-and-Place Anything
-            </div>
-
-            <div class="pub-authors">
+          <div>
+            <div class="card-title">PaPA: Pick-and-Place Anything</div>
+            <div class="authors">
               Towards Scaling Robotic Manipulation: Leveraging World Knowledge as Automated Teleoperator
             </div>
-
-            <div class="pub-venue">
+            <p class="desc">
               A robotic data collection framework that grounds open-vocabulary language
               instructions into explicit geometric representations with vision-language models,
               autonomously generating manipulation trajectories and reducing human effort to
               lightweight post-hoc verification.
-            </div>
+            </p>
           </div>
-        </div>
+        </article>
       </div>
     </section>
 
-    <!-- TEACHING / TALKS (optional) -->
-    <!-- <section class="section">
-      <h2>Talks</h2>
-      <ul>
-        <li><strong>Title</strong>, Venue, 2026. <a href="#" target="_blank" rel="noreferrer">slides</a></li>
-      </ul>
-    </section> -->
-
     <div class="footer">
-      © <span id="year"></span> Unghui Nam · Built with GitHub Pages
+      &copy; <span id="year"></span> Unghui Nam &middot; Built with GitHub Pages
     </div>
   </main>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    (function(){
+      var items = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window) ||
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+        items.forEach(function(el){ el.classList.add("is-visible"); });
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        });
+      }, {threshold: 0.08, rootMargin: "0px 0px -40px 0px"});
+
+      items.forEach(function(el, i){
+        el.style.setProperty("--d", Math.min(i, 4) * 90 + "ms");
+        io.observe(el);
+      });
+    })();
   </script>
 </body>
 </html>
