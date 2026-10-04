@@ -70,27 +70,13 @@
       gap:34px;
       align-items:start;
     }
-    .photo{position:relative; z-index:0;}
     .photo img{
       width:100%;
       height:auto;
       display:block;
       border-radius:16px;
       box-shadow:var(--shadow-md);
-      transition:transform .3s var(--ease);
     }
-    .photo::after{
-      content:"";
-      position:absolute;
-      inset:-5px;
-      border-radius:21px;
-      background:linear-gradient(135deg, var(--indigo), var(--sky));
-      opacity:0;
-      transition:opacity .3s var(--ease);
-      z-index:-1;
-    }
-    .photo:hover img{transform:translateY(-3px);}
-    .photo:hover::after{opacity:.75;}
 
     h1{
       font-size:clamp(32px,5.2vw,44px);
